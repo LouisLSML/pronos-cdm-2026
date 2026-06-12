@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ Pronos CDM 2026 — Optimisés MPP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e1a; --card:#131a2e; --card2:#1a2340; --line:#26304f;
+    --txt:#e8ecf6; --muted:#8a94b0; --gold:#f5c842; --green:#4ade80;
+    --lime:#a3e635; --red:#f87171; --blue:#60a5fa; --purple:#c084fc;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Outfit',system-ui,sans-serif; background:
+    radial-gradient(1200px 600px at 80% -10%, #1a2a52 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, #14224a 0%, transparent 55%),
+    var(--bg);
+    color:var(--txt); min-height:100vh; padding:24px 16px 60px;
+  }
+  .wrap{max-width:1280px;margin:0 auto}
+  header{text-align:center;margin-bottom:18px}
+  h1{font-size:clamp(24px,4vw,40px);font-weight:800;letter-spacing:-.5px}
+  h1 .gold{color:var(--gold)}
+  .sub{color:var(--muted);margin-top:6px;font-size:14px}
+  .updated{display:inline-block;margin-top:8px;font-size:12px;color:var(--blue);
+    border:1px solid var(--line);padding:3px 12px;border-radius:99px}
+
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:10px 18px;text-align:center;min-width:110px}
+  .stat b{display:block;font-size:22px;color:var(--gold)}
+  .stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+
+  details.strat{background:linear-gradient(135deg,#1a2340,#131a2e);border:1px solid var(--line);
+    border-radius:14px;padding:14px 18px;margin-bottom:18px;font-size:14px}
+  details.strat summary{cursor:pointer;font-weight:700;color:var(--gold);font-size:15px}
+  details.strat ul{margin:10px 0 4px 20px;line-height:1.65;color:#c6cde0}
+  details.strat li b{color:var(--txt)}
+
+  .controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+  .btn{background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:7px 16px;border-radius:99px;cursor:pointer;font-family:inherit;font-size:13px;
+    font-weight:600;transition:.15s}
+  .btn:hover{border-color:var(--gold);color:var(--txt)}
+  .btn.on{background:var(--gold);color:#0a0e1a;border-color:var(--gold)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:18px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .grid.chrono{grid-template-columns:1fr;max-width:860px;margin:0 auto}
+  .daycard .gletter{background:var(--card2);color:var(--gold);font-size:17px}
+
+  .gcard{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .ghead{display:flex;align-items:center;gap:12px;padding:13px 18px;
+    background:linear-gradient(90deg,var(--card2),transparent)}
+  .gletter{width:38px;height:38px;border-radius:11px;background:var(--gold);color:#0a0e1a;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
+  .ghead h2{font-size:16px;font-weight:700;flex:1}
+  .ghead .teams{font-size:11px;color:var(--muted)}
+
+  table.standings{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.standings th{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:10px;
+    letter-spacing:.5px;padding:4px 6px;text-align:center}
+  table.standings th:first-child{text-align:left;padding-left:18px}
+  table.standings td{padding:5px 6px;text-align:center;border-top:1px solid #1d2541}
+  table.standings td:first-child{text-align:left;padding-left:18px}
+  .tname{display:flex;align-items:center;gap:8px;font-weight:600}
+  .tname img{width:22px;height:15px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px #00000055}
+  .qual{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+  .q-direct{background:var(--green)} .q-third{background:var(--gold)} .q-out{background:#3a4566}
+
+  .matches{padding:8px 12px 14px}
+  .match{display:grid;grid-template-columns:52px 1fr 86px 1fr 100px;align-items:center;
+    gap:8px;padding:9px 6px;border-radius:12px;transition:.15s}
+  .match:hover{background:#1a2340}
+  .match+.match{border-top:1px solid #1d2541}
+  .mdate{font-size:11px;color:var(--muted);text-align:center;line-height:1.3}
+  .mdate b{display:block;color:var(--blue);font-size:10px}
+  .side{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;min-width:0}
+  .side img{width:24px;height:16px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px #00000055;flex-shrink:0}
+  .side span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .side.away{justify-content:flex-end;text-align:right}
+  .score{text-align:center}
+  .pred{font-size:17px;font-weight:800;background:var(--card2);border:1px solid var(--line);
+    border-radius:9px;padding:3px 0;letter-spacing:2px}
+  .pred.small{font-size:11px;font-weight:600;background:none;border:none;color:var(--muted);
+    padding:1px 0;letter-spacing:1px}
+  .actual{font-size:17px;font-weight:800;border-radius:9px;padding:3px 0;letter-spacing:2px}
+  .actual.exact{background:#14351f;border:1px solid var(--green);color:var(--green)}
+  .actual.good{background:#2a3315;border:1px solid var(--lime);color:var(--lime)}
+  .actual.miss{background:#351717;border:1px solid var(--red);color:var(--red)}
+  .meta{display:flex;flex-direction:column;gap:3px;align-items:flex-end;font-size:10.5px}
+  .chip{border-radius:99px;padding:1px 8px;font-weight:600;white-space:nowrap}
+  .chip.cote{background:#1b2a4d;color:var(--blue)}
+  .chip.rar{background:#2d2347;color:var(--purple)}
+  .chip.pts-win{background:#14351f;color:var(--green)}
+  .chip.pts-zero{background:#351717;color:var(--red)}
+  .note{grid-column:1/-1;font-size:11.5px;color:#9aa6c8;padding:2px 8px 4px 60px;line-height:1.45}
+  .note .poker{color:var(--gold);font-weight:600}
+  .hidden{display:none!important}
+
+  footer{margin-top:30px;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.8}
+  footer a{color:var(--blue);text-decoration:none}
+  .legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-size:11px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>⚽ Coupe du Monde <span class="gold">2026</span> — Pronostics MPP 🏆</h1>
+  <div class="sub">Phase de poules · 72 matchs · pronostics optimisés pour <b>Mon Petit Prono</b> (cote × rareté du score exact)</div>
+  <div class="updated" id="updated">Dernière mise à jour : 11 juin 2026 — aucun résultat saisi</div>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<details class="strat">
+  <summary>🧠 Stratégie MPP — pourquoi ces scores ?</summary>
+  <ul>
+    <li><b>Le barème suit la cote</b> : sur MPP un favori rapporte peu (≈ cote × 10) et une surprise beaucoup. L'espérance du « bon résultat » est donc quasi identique quel que soit le choix. <b>Le vrai levier, c'est le score exact</b> et son bonus rareté : +20 pts si &gt;30 % des joueurs l'ont, +30 (20-30 %), +50 (5-20 %), +70 (0,5-5 %), +100 (&lt;0,5 %).</li>
+    <li><b>Jouer le résultat le plus probable, mais avec un score décalé du peloton</b> : 3-0 ou 4-0 au lieu du 2-0 massivement joué contre les petites équipes, 1-0 contre les blocs bas (Paraguay, Iran), 2-1 au lieu de 2-0 quand l'adversaire peut marquer.</li>
+    <li><b>Les nuls sont sous-joués</b> : ~25 % des matchs de poule finissent nuls mais le peloton en coche très peu. 13 nuls ciblés ici (douze 1-1 et un 0-0 Égypte–Iran) = gros différentiel potentiel.</li>
+    <li><b>Bonus X2</b> : le garder pour un match couperet des 16es avec un favori net, ou le rentabiliser tôt sur <b>Canada–Qatar (3-0)</b> ou <b>France–Irak (4-0)</b> si tu préfères sécuriser.</li>
+    <li><b>Méfiance J3</b> : équipes déjà qualifiées = turnover, plus de nuls et de surprises. D'où les nuls joués sur Suisse–Canada, Norvège–France, Colombie–Portugal…</li>
+    <li><b>Infos fraîches intégrées</b> : forme moyenne de la France (battue par la Côte d'Ivoire en prépa), Norvège euphorique (a sorti l'Italie), Maroc champion d'Afrique, doutes sur Yamal — mais l'Espagne reste n°1.</li>
+  </ul>
+</details>
+
+<div class="controls">
+  <button class="btn on" data-f="all">Tous les matchs</button>
+  <button class="btn" data-f="j1">Journée 1</button>
+  <button class="btn" data-f="j2">Journée 2</button>
+  <button class="btn" data-f="j3">Journée 3</button>
+  <button class="btn" data-f="value">🎯 Value picks (rareté ≥ 50)</button>
+  <button class="btn" data-f="draws">🤝 Nuls joués</button>
+  <button class="btn" data-f="hits">✅ Pronos justes</button>
+  <button class="btn" data-f="miss">❌ Pronos ratés</button>
+  <button class="btn" id="chronoBtn">📅 Tri chronologique</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="legend">
+  <span><i class="qual q-direct"></i> Qualifié direct (top 2)</span>
+  <span><i class="qual q-third"></i> Parmi les 8 meilleurs 3<sup>es</sup> (projeté)</span>
+  <span>🟩 Score exact</span><span>🟨 Bon résultat</span><span>🟥 Raté</span>
+  <span>💎 = cote estimée du résultat · ✨ = bonus rareté visé</span>
+</div>
+
+<footer>
+  Pronostics établis le 11/06/2026 à partir des cotes bookmakers, du modèle PELE (Nate Silver), des power rankings ESPN et de l'historique des Coupes du Monde.<br>
+  Classements <b>projetés</b> : résultats réels quand ils existent, sinon pronostics. Les points MPP affichés sont des <b>estimations</b> (le barème exact dépend des cotes affichées dans l'app et du % réel de joueurs).<br>
+  Pour mettre à jour un résultat : éditer le tableau <code>MATCHES</code> dans le code (champ <code>r:[buts_dom, buts_ext]</code>) — ou me demander de le faire.
+</footer>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   DONNÉES — pour saisir un résultat réel, remplacer r:[null,null]
+   par r:[butsDomicile, butsExtérieur].  Ex: r:[2,0]
+   p = pronostic [dom, ext] · c = cote estimée du résultat pronostiqué
+   b = bonus rareté visé si score exact (20/30/50/70/100)
+   ════════════════════════════════════════════════════════════════════ */
+const TEAMS = {
+  MEX:{n:"Mexique",f:"mx"},        RSA:{n:"Afrique du Sud",f:"za"}, KOR:{n:"Corée du Sud",f:"kr"},  CZE:{n:"Tchéquie",f:"cz"},
+  CAN:{n:"Canada",f:"ca"},         BIH:{n:"Bosnie-Herz.",f:"ba"},   QAT:{n:"Qatar",f:"qa"},          SUI:{n:"Suisse",f:"ch"},
+  BRA:{n:"Brésil",f:"br"},         MAR:{n:"Maroc",f:"ma"},          HAI:{n:"Haïti",f:"ht"},          SCO:{n:"Écosse",f:"gb-sct"},
+  USA:{n:"États-Unis",f:"us"},     PAR:{n:"Paraguay",f:"py"},       AUS:{n:"Australie",f:"au"},      TUR:{n:"Turquie",f:"tr"},
+  GER:{n:"Allemagne",f:"de"},      CUW:{n:"Curaçao",f:"cw"},        CIV:{n:"Côte d'Ivoire",f:"ci"},  ECU:{n:"Équateur",f:"ec"},
+  NED:{n:"Pays-Bas",f:"nl"},       JPN:{n:"Japon",f:"jp"},          SWE:{n:"Suède",f:"se"},          TUN:{n:"Tunisie",f:"tn"},
+  BEL:{n:"Belgique",f:"be"},       EGY:{n:"Égypte",f:"eg"},         IRN:{n:"Iran",f:"ir"},           NZL:{n:"Nlle-Zélande",f:"nz"},
+  ESP:{n:"Espagne",f:"es"},        CPV:{n:"Cap-Vert",f:"cv"},       KSA:{n:"Arabie Saoudite",f:"sa"},URU:{n:"Uruguay",f:"uy"},
+  FRA:{n:"France",f:"fr"},         SEN:{n:"Sénégal",f:"sn"},        IRQ:{n:"Irak",f:"iq"},           NOR:{n:"Norvège",f:"no"},
+  ARG:{n:"Argentine",f:"ar"},      ALG:{n:"Algérie",f:"dz"},        AUT:{n:"Autriche",f:"at"},       JOR:{n:"Jordanie",f:"jo"},
+  POR:{n:"Portugal",f:"pt"},       COD:{n:"RD Congo",f:"cd"},       UZB:{n:"Ouzbékistan",f:"uz"},    COL:{n:"Colombie",f:"co"},
+  ENG:{n:"Angleterre",f:"gb-eng"}, CRO:{n:"Croatie",f:"hr"},        GHA:{n:"Ghana",f:"gh"},          PAN:{n:"Panama",f:"pa"}
+};
+
+const MATCHES = [
+ // ─── GROUPE A ───
+ {id:"A1",g:"A",j:1,d:"11/06",h:"MEX",a:"RSA",p:[2,0],r:[2,0],c:1.45,b:20,
+  note:"Ouverture à l'Azteca : altitude + 90 000 fans, le Mexique n'a jamais perdu son match d'ouverture à domicile."},
+ {id:"A2",g:"A",j:1,d:"11/06",h:"KOR",a:"CZE",p:[1,1],r:[2,1],c:3.10,b:50,
+  note:"Match très équilibré (la Tchéquie a sorti le Danemark en barrage). Nul sous-joué par le peloton."},
+ {id:"A3",g:"A",j:2,d:"18/06",h:"CZE",a:"RSA",p:[2,0],r:[null,null],c:1.75,b:20},
+ {id:"A4",g:"A",j:2,d:"18/06",h:"MEX",a:"KOR",p:[2,1],r:[null,null],c:1.55,b:30},
+ {id:"A5",g:"A",j:3,d:"24/06",h:"CZE",a:"MEX",p:[1,2],r:[null,null],c:1.70,b:30},
+ {id:"A6",g:"A",j:3,d:"24/06",h:"RSA",a:"KOR",p:[1,2],r:[null,null],c:1.85,b:30},
+ // ─── GROUPE B ───
+ {id:"B1",g:"B",j:1,d:"12/06",h:"CAN",a:"BIH",p:[2,1],r:[null,null],c:1.55,b:30,
+  note:"Canada à domicile (Toronto), mais la Bosnie arrive lancée après avoir éliminé l'Italie aux tirs au but."},
+ {id:"B2",g:"B",j:1,d:"13/06",h:"QAT",a:"SUI",p:[0,2],r:[null,null],c:1.50,b:20},
+ {id:"B3",g:"B",j:2,d:"18/06",h:"SUI",a:"BIH",p:[2,1],r:[null,null],c:1.70,b:30},
+ {id:"B4",g:"B",j:2,d:"18/06",h:"CAN",a:"QAT",p:[3,0],r:[null,null],c:1.40,b:50,
+  note:"3-0 plutôt que le 2-0 du peloton : proba quasi égale, bonus rareté supérieur. Bon candidat X2 si tu veux le jouer tôt."},
+ {id:"B5",g:"B",j:3,d:"24/06",h:"SUI",a:"CAN",p:[1,1],r:[null,null],c:3.20,b:50,
+  note:"Duel pour la 1re place, les deux sans doute déjà qualifiés → profil parfait de match nul."},
+ {id:"B6",g:"B",j:3,d:"24/06",h:"BIH",a:"QAT",p:[2,0],r:[null,null],c:1.65,b:20},
+ // ─── GROUPE C ───
+ {id:"C1",g:"C",j:1,d:"13/06",h:"BRA",a:"MAR",p:[1,1],r:[null,null],c:3.40,b:50,
+  note:"LE choc de la J1. Le Maroc (½-finaliste 2022, champion d'Afrique 2026) est taillé pour accrocher le Brésil d'Ancelotti, privé de vrai 9. 🎲 Coup de poker : 1-2 Maroc (cote ≈ 5,5)."},
+ {id:"C2",g:"C",j:1,d:"13/06",h:"HAI",a:"SCO",p:[0,2],r:[null,null],c:1.50,b:20},
+ {id:"C3",g:"C",j:2,d:"19/06",h:"SCO",a:"MAR",p:[0,2],r:[null,null],c:1.75,b:30},
+ {id:"C4",g:"C",j:2,d:"19/06",h:"BRA",a:"HAI",p:[4,0],r:[null,null],c:1.15,b:50,
+  note:"Carton probable : viser 4-0 plutôt que le 3-0 du peloton."},
+ {id:"C5",g:"C",j:3,d:"24/06",h:"SCO",a:"BRA",p:[0,2],r:[null,null],c:1.45,b:20},
+ {id:"C6",g:"C",j:3,d:"24/06",h:"MAR",a:"HAI",p:[3,0],r:[null,null],c:1.20,b:30},
+ // ─── GROUPE D ───
+ {id:"D1",g:"D",j:1,d:"12/06",h:"USA",a:"PAR",p:[1,0],r:[null,null],c:1.60,b:50,
+  note:"Le Paraguay = bloc bas ultra-défensif (peu de buts en qualifs). 1-0 bien plus rare que le 2-0/2-1 du peloton, proba réelle élevée."},
+ {id:"D2",g:"D",j:1,d:"13/06",h:"AUS",a:"TUR",p:[1,2],r:[null,null],c:1.80,b:30,
+  note:"La Turquie (Güler, Yildiz, Çalhanoğlu) est la vraie menace du groupe selon le modèle de Nate Silver."},
+ {id:"D3",g:"D",j:2,d:"19/06",h:"USA",a:"AUS",p:[2,0],r:[null,null],c:1.55,b:20},
+ {id:"D4",g:"D",j:2,d:"19/06",h:"TUR",a:"PAR",p:[1,1],r:[null,null],c:3.10,b:50},
+ {id:"D5",g:"D",j:3,d:"25/06",h:"TUR",a:"USA",p:[1,1],r:[null,null],c:3.20,b:50,
+  note:"Co-favoris du groupe d'après les modèles, match pour la 1re place. 🎲 Coup de poker : 2-1 Turquie."},
+ {id:"D6",g:"D",j:3,d:"25/06",h:"PAR",a:"AUS",p:[1,0],r:[null,null],c:2.10,b:50},
+ // ─── GROUPE E ───
+ {id:"E1",g:"E",j:1,d:"14/06",h:"GER",a:"CUW",p:[4,0],r:[null,null],c:1.08,b:50,
+  note:"Plus gros écart de niveau du tournoi. Le peloton jouera 3-0 : le 4-0 paie mieux à proba similaire."},
+ {id:"E2",g:"E",j:1,d:"14/06",h:"CIV",a:"ECU",p:[1,1],r:[null,null],c:3.00,b:50,
+  note:"La CIV vient de BATTRE la France en amical ; l'Équateur a la meilleure défense des qualifs sud-américaines. Nul très probable et sous-joué."},
+ {id:"E3",g:"E",j:2,d:"20/06",h:"GER",a:"CIV",p:[2,1],r:[null,null],c:1.50,b:30,
+  note:"L'Allemagne reste fébrile (doutes Havertz/Wirtz/Neuer). 🎲 Coup de poker : 1-1 (cote ≈ 3,8)."},
+ {id:"E4",g:"E",j:2,d:"20/06",h:"ECU",a:"CUW",p:[2,0],r:[null,null],c:1.30,b:20},
+ {id:"E5",g:"E",j:3,d:"25/06",h:"ECU",a:"GER",p:[1,1],r:[null,null],c:3.40,b:50,
+  note:"L'Équateur ne prend pas de but et l'Allemagne sera peut-être déjà qualifiée."},
+ {id:"E6",g:"E",j:3,d:"25/06",h:"CUW",a:"CIV",p:[0,2],r:[null,null],c:1.40,b:20},
+ // ─── GROUPE F ───
+ {id:"F1",g:"F",j:1,d:"14/06",h:"NED",a:"JPN",p:[2,1],r:[null,null],c:1.70,b:30,
+  note:"Le Japon est diminué (Mitoma et Minamino blessés) mais reste dangereux."},
+ {id:"F2",g:"F",j:1,d:"14/06",h:"SWE",a:"TUN",p:[1,1],r:[null,null],c:3.10,b:50,
+  note:"Suède talentueuse (Isak, Gyökeres) mais en méforme chronique ; Tunisie très solide défensivement."},
+ {id:"F3",g:"F",j:2,d:"20/06",h:"NED",a:"SWE",p:[2,0],r:[null,null],c:1.50,b:20},
+ {id:"F4",g:"F",j:2,d:"20/06",h:"TUN",a:"JPN",p:[0,2],r:[null,null],c:1.70,b:30},
+ {id:"F5",g:"F",j:3,d:"25/06",h:"JPN",a:"SWE",p:[2,1],r:[null,null],c:1.90,b:30},
+ {id:"F6",g:"F",j:3,d:"25/06",h:"TUN",a:"NED",p:[0,2],r:[null,null],c:1.40,b:20},
+ // ─── GROUPE G ───
+ {id:"G1",g:"G",j:1,d:"15/06",h:"BEL",a:"EGY",p:[2,0],r:[null,null],c:1.55,b:20},
+ {id:"G2",g:"G",j:1,d:"15/06",h:"IRN",a:"NZL",p:[1,0],r:[null,null],c:1.60,b:50,
+  note:"L'Iran gagne petit : 1-0 plus rare et aussi probable que le 2-0 du peloton."},
+ {id:"G3",g:"G",j:2,d:"21/06",h:"BEL",a:"IRN",p:[2,0],r:[null,null],c:1.50,b:20},
+ {id:"G4",g:"G",j:2,d:"21/06",h:"NZL",a:"EGY",p:[0,2],r:[null,null],c:1.60,b:20},
+ {id:"G5",g:"G",j:3,d:"26/06",h:"EGY",a:"IRN",p:[0,0],r:[null,null],c:3.30,b:70,
+  note:"Deux blocs ultra-défensifs qui joueront la qualif en 3e place : LE 0-0 du tournoi. Bonus rareté énorme si ça passe."},
+ {id:"G6",g:"G",j:3,d:"26/06",h:"NZL",a:"BEL",p:[0,3],r:[null,null],c:1.25,b:50},
+ // ─── GROUPE H ───
+ {id:"H1",g:"H",j:1,d:"15/06",h:"ESP",a:"CPV",p:[4,0],r:[null,null],c:1.07,b:50,
+  note:"L'Espagne n°1 mondiale face au plus petit qualifié africain. 4-0 décalé du 3-0 majoritaire."},
+ {id:"H2",g:"H",j:1,d:"15/06",h:"KSA",a:"URU",p:[0,2],r:[null,null],c:1.55,b:20},
+ {id:"H3",g:"H",j:2,d:"21/06",h:"ESP",a:"KSA",p:[3,0],r:[null,null],c:1.15,b:30},
+ {id:"H4",g:"H",j:2,d:"21/06",h:"URU",a:"CPV",p:[3,0],r:[null,null],c:1.30,b:50},
+ {id:"H5",g:"H",j:3,d:"26/06",h:"CPV",a:"KSA",p:[1,1],r:[null,null],c:3.20,b:50,
+  note:"Match de la peur pour la 3e place, niveaux très proches."},
+ {id:"H6",g:"H",j:3,d:"26/06",h:"URU",a:"ESP",p:[1,2],r:[null,null],c:1.75,b:50,
+  note:"1-2 plus rare que le 0-2 du peloton : l'Uruguay marque presque toujours, l'Espagne encaisse peu mais joue haut."},
+ // ─── GROUPE I ───
+ {id:"I1",g:"I",j:1,d:"16/06",h:"FRA",a:"SEN",p:[2,1],r:[null,null],c:1.55,b:30,
+  note:"Le groupe de la mort. France favorite mais en forme moyenne (battue par la CIV en prépa) ; le Sénégal de Koulibaly sait marquer. 2-1 plutôt que le 2-0 du peloton."},
+ {id:"I2",g:"I",j:1,d:"16/06",h:"IRQ",a:"NOR",p:[0,3],r:[null,null],c:1.25,b:50,
+  note:"Haaland face à la défense la plus faible du groupe : 0-3 décalé du 0-2."},
+ {id:"I3",g:"I",j:2,d:"22/06",h:"FRA",a:"IRQ",p:[4,0],r:[null,null],c:1.12,b:50,
+  note:"Candidat X2 : favori écrasant, et le 4-0 paie mieux que le 3-0 majoritaire."},
+ {id:"I4",g:"I",j:2,d:"22/06",h:"NOR",a:"SEN",p:[2,1],r:[null,null],c:1.90,b:30,
+  note:"La Norvège a sorti l'Italie en qualifs, Ødegaard-Haaland en feu. Léger favori assumé."},
+ {id:"I5",g:"I",j:3,d:"26/06",h:"NOR",a:"FRA",p:[1,1],r:[null,null],c:3.30,b:50,
+  note:"Choc pour la 1re place du groupe, le nul peut arranger les deux. 🎲 Coup de poker : 2-1 Norvège (cote ≈ 4,5)."},
+ {id:"I6",g:"I",j:3,d:"26/06",h:"SEN",a:"IRQ",p:[2,0],r:[null,null],c:1.40,b:20},
+ // ─── GROUPE J ───
+ {id:"J1",g:"J",j:1,d:"16/06",h:"ARG",a:"ALG",p:[2,0],r:[null,null],c:1.35,b:20,
+  note:"Champions en titre, mais vieillissants et touchés par les blessures (Romero, Álvarez) : pas de carton attendu."},
+ {id:"J2",g:"J",j:1,d:"16/06",h:"AUT",a:"JOR",p:[2,0],r:[null,null],c:1.50,b:20},
+ {id:"J3",g:"J",j:2,d:"22/06",h:"ARG",a:"AUT",p:[2,1],r:[null,null],c:1.60,b:30,
+  note:"L'Autriche de Rangnick presse haut et marquera. 2-1 plutôt que 2-0."},
+ {id:"J4",g:"J",j:2,d:"22/06",h:"JOR",a:"ALG",p:[1,2],r:[null,null],c:1.90,b:30},
+ {id:"J5",g:"J",j:3,d:"27/06",h:"ALG",a:"AUT",p:[1,1],r:[null,null],c:3.10,b:50,
+  note:"Duel direct pour la 2e place : profil de nul."},
+ {id:"J6",g:"J",j:3,d:"27/06",h:"JOR",a:"ARG",p:[0,3],r:[null,null],c:1.30,b:50},
+ // ─── GROUPE K ───
+ {id:"K1",g:"K",j:1,d:"17/06",h:"POR",a:"COD",p:[3,0],r:[null,null],c:1.20,b:30,
+  note:"Dernière danse de Ronaldo ; le Portugal est LE pick tendance des bookmakers (cote titre en forte baisse)."},
+ {id:"K2",g:"K",j:1,d:"17/06",h:"UZB",a:"COL",p:[0,2],r:[null,null],c:1.60,b:20},
+ {id:"K3",g:"K",j:2,d:"23/06",h:"POR",a:"UZB",p:[3,0],r:[null,null],c:1.25,b:30},
+ {id:"K4",g:"K",j:2,d:"23/06",h:"COL",a:"COD",p:[2,0],r:[null,null],c:1.35,b:20},
+ {id:"K5",g:"K",j:3,d:"27/06",h:"COL",a:"POR",p:[1,1],r:[null,null],c:3.30,b:50,
+  note:"Deux équipes sans doute qualifiées, duel pour la 1re place : nul classique de J3."},
+ {id:"K6",g:"K",j:3,d:"27/06",h:"COD",a:"UZB",p:[0,1],r:[null,null],c:2.40,b:50,
+  note:"L'Ouzbékistan est la meilleure des deux équipes sur la durée : 0-1 à belle cote."},
+ // ─── GROUPE L ───
+ {id:"L1",g:"L",j:1,d:"17/06",h:"ENG",a:"CRO",p:[2,0],r:[null,null],c:1.60,b:30,
+  note:"Kane en forme stratosphérique (64 buts avec le Bayern) ; la Croatie de Modrić (40 ans) vieillit. 🎲 Coup de poker : 1-1 (cote ≈ 3,6)."},
+ {id:"L2",g:"L",j:1,d:"17/06",h:"GHA",a:"PAN",p:[2,1],r:[null,null],c:1.85,b:30},
+ {id:"L3",g:"L",j:2,d:"23/06",h:"ENG",a:"GHA",p:[3,0],r:[null,null],c:1.30,b:50},
+ {id:"L4",g:"L",j:2,d:"23/06",h:"PAN",a:"CRO",p:[0,2],r:[null,null],c:1.60,b:20},
+ {id:"L5",g:"L",j:3,d:"27/06",h:"PAN",a:"ENG",p:[0,3],r:[null,null],c:1.25,b:50},
+ {id:"L6",g:"L",j:3,d:"27/06",h:"CRO",a:"GHA",p:[2,0],r:[null,null],c:1.70,b:30}
+];
+
+const GROUPS = "ABCDEFGHIJKL".split("");
+
+/* ── helpers ─────────────────────────────────────────────── */
+const flag = c => `<img src="https://flagcdn.com/h24/${TEAMS[c].f}.png" alt="${TEAMS[c].n}" loading="lazy">`;
+const sign = (h,a) => h>a ? 1 : (h<a ? -1 : 0);
+const played = m => m.r[0]!==null && m.r[1]!==null;
+const effective = m => played(m) ? m.r : m.p;
+
+/* statut du prono vs résultat réel */
+function status(m){
+  if(!played(m)) return null;
+  if(m.r[0]===m.p[0] && m.r[1]===m.p[1]) return "exact";
+  if(sign(...m.r)===sign(...m.p)) return "good";
+  return "miss";
+}
+function pointsFor(m){
+  const s = status(m);
+  if(s==null) return null;
+  if(s==="miss") return 0;
+  const base = Math.round(m.c*10);
+  return s==="exact" ? base + m.b : base;
+}
+
+/* classements (résultats réels si dispo, sinon pronostics) */
+function standings(g){
+  const t = {};
+  MATCHES.filter(m=>m.g===g).forEach(m=>{
+    [m.h,m.a].forEach(c=>{ if(!t[c]) t[c]={c, pts:0,j:0,gf:0,ga:0}; });
+    const [gh,ga] = effective(m);
+    t[m.h].j++; t[m.a].j++;
+    t[m.h].gf+=gh; t[m.h].ga+=ga; t[m.a].gf+=ga; t[m.a].ga+=gh;
+    if(gh>ga) t[m.h].pts+=3; else if(gh<ga) t[m.a].pts+=3; else {t[m.h].pts++; t[m.a].pts++;}
+  });
+  return Object.values(t).sort((x,y)=> y.pts-x.pts || (y.gf-y.ga)-(x.gf-x.ga) || y.gf-x.gf || TEAMS[x.c].n.localeCompare(TEAMS[y.c].n));
+}
+/* les 8 meilleurs troisièmes (projetés) */
+function bestThirds(){
+  return GROUPS.map(g=>standings(g)[2])
+    .sort((x,y)=> y.pts-x.pts || (y.gf-y.ga)-(x.gf-x.ga) || y.gf-x.gf)
+    .slice(0,8).map(t=>t.c);
+}
+
+/* ── rendu ───────────────────────────────────────────────── */
+const FILTERS = {
+  all:   () => true,
+  j1:    m => m.j===1,
+  j2:    m => m.j===2,
+  j3:    m => m.j===3,
+  value: m => m.b>=50,
+  draws: m => m.p[0]===m.p[1],
+  hits:  m => played(m) && status(m)!=="miss",
+  miss:  m => played(m) && status(m)==="miss"
+};
+let FILTER = "all", CHRONO = false;
+const dkey = d => { const [dd,mm]=d.split("/").map(Number); return mm*100+dd; };
+
+function matchRow(m, mode){
+  const s = status(m), pts = pointsFor(m);
+  const scoreCell = played(m)
+    ? `<div class="actual ${s}">${m.r[0]} - ${m.r[1]}</div><div class="pred small">prono ${m.p[0]}-${m.p[1]}</div>`
+    : `<div class="pred">${m.p[0]} - ${m.p[1]}</div>`;
+  const ptsChip = pts===null ? "" :
+    `<span class="chip ${pts>0?"pts-win":"pts-zero"}">${pts>0?"+"+pts+" pts":"0 pt"}${s==="exact"?" 🎯":""}</span>`;
+  const first = mode==="chrono"
+    ? `<div class="mdate"><b>Gr. ${m.g}</b>J${m.j}</div>`
+    : `<div class="mdate"><b>J${m.j}</b>${m.d}</div>`;
+  return `<div class="match">
+    ${first}
+    <div class="side">${flag(m.h)}<span>${TEAMS[m.h].n}</span></div>
+    <div class="score">${scoreCell}</div>
+    <div class="side away"><span>${TEAMS[m.a].n}</span>${flag(m.a)}</div>
+    <div class="meta">
+      <span class="chip cote">💎 ${m.c.toFixed(2)}</span>
+      <span class="chip rar">✨ +${m.b}</span>
+      ${ptsChip}
+    </div>
+    ${m.note?`<div class="note">${m.note.replace(/🎲([^.]*\.)/g,'<span class="poker">🎲$1</span>')}</div>`:""}
+  </div>`;
+}
+
+function render(){
+  const grid = document.getElementById("grid");
+  const keep = FILTERS[FILTER] || (()=>true);
+  grid.classList.toggle("chrono", CHRONO);
+  if(CHRONO){
+    /* vue chronologique : matchs groupés par jour */
+    const byDay = {};
+    MATCHES.filter(keep).forEach(m=>{ (byDay[m.d] = byDay[m.d]||[]).push(m); });
+    grid.innerHTML = Object.keys(byDay).sort((a,b)=>dkey(a)-dkey(b)).map(d=>{
+      const [dd,mm] = d.split("/").map(Number);
+      const label = new Date(2026, mm-1, dd)
+        .toLocaleDateString("fr-FR",{weekday:"long", day:"numeric", month:"long"});
+      const ms = byDay[d];
+      return `<div class="gcard daycard">
+        <div class="ghead"><div class="gletter">📅</div>
+          <h2>${label.charAt(0).toUpperCase()+label.slice(1)}</h2>
+          <div class="teams">${ms.length} match${ms.length>1?"s":""}</div></div>
+        <div class="matches">${ms.map(m=>matchRow(m,"chrono")).join("")}</div>
+      </div>`;
+    }).join("");
+  } else {
+    /* vue par groupes */
+    const thirds = bestThirds();
+    grid.innerHTML = GROUPS.map(g=>{
+      const st = standings(g);
+      const ms = MATCHES.filter(m=>m.g===g).filter(keep);
+      if(!ms.length) return "";
+      const rows = st.map((t,i)=>{
+        const q = i<2 ? "q-direct" : (i===2 && thirds.includes(t.c) ? "q-third" : "q-out");
+        return `<tr><td><span class="tname"><span class="qual ${q}"></span>${flag(t.c)}${TEAMS[t.c].n}</span></td>
+          <td>${t.pts}</td><td>${t.gf-t.ga>0?"+":""}${t.gf-t.ga}</td><td>${t.gf}</td></tr>`;
+      }).join("");
+      return `<div class="gcard">
+        <div class="ghead"><div class="gletter">${g}</div>
+          <h2>Groupe ${g}</h2>
+          <div class="teams">${st.map(t=>TEAMS[t.c].n).join(" · ")}</div></div>
+        <table class="standings">
+          <tr><th>Équipe (projeté)</th><th>Pts</th><th>+/-</th><th>BP</th></tr>${rows}</table>
+        <div class="matches">${ms.map(m=>matchRow(m,"group")).join("")}</div>
+      </div>`;
+    }).join("");
+  }
+  renderStats();
+}
+
+function renderStats(){
+  const done = MATCHES.filter(played);
+  const good = done.filter(m=>status(m)!=="miss").length;
+  const exact = done.filter(m=>status(m)==="exact").length;
+  const pts = done.reduce((s,m)=>s+pointsFor(m),0);
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><b>${done.length}/72</b><span>matchs joués</span></div>
+    <div class="stat"><b>${good}${done.length?"/"+done.length:""}</b><span>bons résultats</span></div>
+    <div class="stat"><b>${exact}</b><span>scores exacts</span></div>
+    <div class="stat"><b>${pts}</b><span>pts MPP estimés</span></div>
+    <div class="stat"><b>${MATCHES.filter(m=>m.p[0]===m.p[1]).length}</b><span>nuls joués</span></div>`;
+  if(done.length){
+    const last = "Dernière mise à jour : " + new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}) + ` — ${done.length} résultat(s) saisi(s)`;
+    document.getElementById("updated").textContent = last;
+  }
+}
+
+document.querySelectorAll(".btn[data-f]").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".btn[data-f]").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");
+  FILTER = b.dataset.f;
+  render();
+}));
+const chronoBtn = document.getElementById("chronoBtn");
+chronoBtn.addEventListener("click",()=>{
+  CHRONO = !CHRONO;
+  chronoBtn.classList.toggle("on", CHRONO);
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
