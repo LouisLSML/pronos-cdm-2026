@@ -112,7 +112,7 @@
 <header>
   <h1>⚽ Coupe du Monde <span class="gold">2026</span> — Pronostics MPP 🏆</h1>
   <div class="sub">Phase de poules · 72 matchs · pronostics optimisés pour <b>Mon Petit Prono</b> (cote × rareté du score exact)</div>
-  <div class="updated" id="updated">Dernière mise à jour : 11 juin 2026 — aucun résultat saisi</div>
+  <div class="updated" id="updated">Dernière mise à jour : 17 juin 2026 — J1 complète (groupes A–J)</div>
 </header>
 
 <div class="stats" id="stats"></div>
@@ -190,9 +190,9 @@ const MATCHES = [
  {id:"A5",g:"A",j:3,d:"24/06",h:"CZE",a:"MEX",p:[1,2],r:[null,null],c:1.70,b:30},
  {id:"A6",g:"A",j:3,d:"24/06",h:"RSA",a:"KOR",p:[1,2],r:[null,null],c:1.85,b:30},
  // ─── GROUPE B ───
- {id:"B1",g:"B",j:1,d:"12/06",h:"CAN",a:"BIH",p:[2,1],r:[null,null],c:1.55,b:30,
+ {id:"B1",g:"B",j:1,d:"12/06",h:"CAN",a:"BIH",p:[2,1],r:[1,1],c:1.55,b:30,
   note:"Canada à domicile (Toronto), mais la Bosnie arrive lancée après avoir éliminé l'Italie aux tirs au but."},
- {id:"B2",g:"B",j:1,d:"13/06",h:"QAT",a:"SUI",p:[0,2],r:[null,null],c:1.50,b:20},
+ {id:"B2",g:"B",j:1,d:"13/06",h:"QAT",a:"SUI",p:[0,2],r:[1,1],c:1.50,b:20},
  {id:"B3",g:"B",j:2,d:"18/06",h:"SUI",a:"BIH",p:[2,1],r:[null,null],c:1.70,b:30},
  {id:"B4",g:"B",j:2,d:"18/06",h:"CAN",a:"QAT",p:[3,0],r:[null,null],c:1.40,b:50,
   note:"3-0 plutôt que le 2-0 du peloton : proba quasi égale, bonus rareté supérieur. Bon candidat X2 si tu veux le jouer tôt."},
@@ -200,18 +200,18 @@ const MATCHES = [
   note:"Duel pour la 1re place, les deux sans doute déjà qualifiés → profil parfait de match nul."},
  {id:"B6",g:"B",j:3,d:"24/06",h:"BIH",a:"QAT",p:[2,0],r:[null,null],c:1.65,b:20},
  // ─── GROUPE C ───
- {id:"C1",g:"C",j:1,d:"13/06",h:"BRA",a:"MAR",p:[1,1],r:[null,null],c:3.40,b:50,
+ {id:"C1",g:"C",j:1,d:"13/06",h:"BRA",a:"MAR",p:[1,1],r:[1,1],c:3.40,b:50,
   note:"LE choc de la J1. Le Maroc (½-finaliste 2022, champion d'Afrique 2026) est taillé pour accrocher le Brésil d'Ancelotti, privé de vrai 9. 🎲 Coup de poker : 1-2 Maroc (cote ≈ 5,5)."},
- {id:"C2",g:"C",j:1,d:"13/06",h:"HAI",a:"SCO",p:[0,2],r:[null,null],c:1.50,b:20},
+ {id:"C2",g:"C",j:1,d:"13/06",h:"HAI",a:"SCO",p:[0,2],r:[0,1],c:1.50,b:20},
  {id:"C3",g:"C",j:2,d:"19/06",h:"SCO",a:"MAR",p:[0,2],r:[null,null],c:1.75,b:30},
  {id:"C4",g:"C",j:2,d:"19/06",h:"BRA",a:"HAI",p:[4,0],r:[null,null],c:1.15,b:50,
   note:"Carton probable : viser 4-0 plutôt que le 3-0 du peloton."},
  {id:"C5",g:"C",j:3,d:"24/06",h:"SCO",a:"BRA",p:[0,2],r:[null,null],c:1.45,b:20},
  {id:"C6",g:"C",j:3,d:"24/06",h:"MAR",a:"HAI",p:[3,0],r:[null,null],c:1.20,b:30},
  // ─── GROUPE D ───
- {id:"D1",g:"D",j:1,d:"12/06",h:"USA",a:"PAR",p:[1,0],r:[null,null],c:1.60,b:50,
+ {id:"D1",g:"D",j:1,d:"12/06",h:"USA",a:"PAR",p:[1,0],r:[4,1],c:1.60,b:50,
   note:"Le Paraguay = bloc bas ultra-défensif (peu de buts en qualifs). 1-0 bien plus rare que le 2-0/2-1 du peloton, proba réelle élevée."},
- {id:"D2",g:"D",j:1,d:"13/06",h:"AUS",a:"TUR",p:[1,2],r:[null,null],c:1.80,b:30,
+ {id:"D2",g:"D",j:1,d:"13/06",h:"AUS",a:"TUR",p:[1,2],r:[2,0],c:1.80,b:30,
   note:"La Turquie (Güler, Yildiz, Çalhanoğlu) est la vraie menace du groupe selon le modèle de Nate Silver."},
  {id:"D3",g:"D",j:2,d:"19/06",h:"USA",a:"AUS",p:[2,0],r:[null,null],c:1.55,b:20},
  {id:"D4",g:"D",j:2,d:"19/06",h:"TUR",a:"PAR",p:[1,1],r:[null,null],c:3.10,b:50},
@@ -219,9 +219,9 @@ const MATCHES = [
   note:"Co-favoris du groupe d'après les modèles, match pour la 1re place. 🎲 Coup de poker : 2-1 Turquie."},
  {id:"D6",g:"D",j:3,d:"25/06",h:"PAR",a:"AUS",p:[1,0],r:[null,null],c:2.10,b:50},
  // ─── GROUPE E ───
- {id:"E1",g:"E",j:1,d:"14/06",h:"GER",a:"CUW",p:[4,0],r:[null,null],c:1.08,b:50,
+ {id:"E1",g:"E",j:1,d:"14/06",h:"GER",a:"CUW",p:[4,0],r:[7,1],c:1.08,b:50,
   note:"Plus gros écart de niveau du tournoi. Le peloton jouera 3-0 : le 4-0 paie mieux à proba similaire."},
- {id:"E2",g:"E",j:1,d:"14/06",h:"CIV",a:"ECU",p:[1,1],r:[null,null],c:3.00,b:50,
+ {id:"E2",g:"E",j:1,d:"14/06",h:"CIV",a:"ECU",p:[1,1],r:[1,0],c:3.00,b:50,
   note:"La CIV vient de BATTRE la France en amical ; l'Équateur a la meilleure défense des qualifs sud-américaines. Nul très probable et sous-joué."},
  {id:"E3",g:"E",j:2,d:"20/06",h:"GER",a:"CIV",p:[2,1],r:[null,null],c:1.50,b:30,
   note:"L'Allemagne reste fébrile (doutes Havertz/Wirtz/Neuer). 🎲 Coup de poker : 1-1 (cote ≈ 3,8)."},
@@ -230,17 +230,17 @@ const MATCHES = [
   note:"L'Équateur ne prend pas de but et l'Allemagne sera peut-être déjà qualifiée."},
  {id:"E6",g:"E",j:3,d:"25/06",h:"CUW",a:"CIV",p:[0,2],r:[null,null],c:1.40,b:20},
  // ─── GROUPE F ───
- {id:"F1",g:"F",j:1,d:"14/06",h:"NED",a:"JPN",p:[2,1],r:[null,null],c:1.70,b:30,
+ {id:"F1",g:"F",j:1,d:"14/06",h:"NED",a:"JPN",p:[2,1],r:[2,2],c:1.70,b:30,
   note:"Le Japon est diminué (Mitoma et Minamino blessés) mais reste dangereux."},
- {id:"F2",g:"F",j:1,d:"14/06",h:"SWE",a:"TUN",p:[1,1],r:[null,null],c:3.10,b:50,
+ {id:"F2",g:"F",j:1,d:"14/06",h:"SWE",a:"TUN",p:[1,1],r:[5,1],c:3.10,b:50,
   note:"Suède talentueuse (Isak, Gyökeres) mais en méforme chronique ; Tunisie très solide défensivement."},
  {id:"F3",g:"F",j:2,d:"20/06",h:"NED",a:"SWE",p:[2,0],r:[null,null],c:1.50,b:20},
  {id:"F4",g:"F",j:2,d:"20/06",h:"TUN",a:"JPN",p:[0,2],r:[null,null],c:1.70,b:30},
  {id:"F5",g:"F",j:3,d:"25/06",h:"JPN",a:"SWE",p:[2,1],r:[null,null],c:1.90,b:30},
  {id:"F6",g:"F",j:3,d:"25/06",h:"TUN",a:"NED",p:[0,2],r:[null,null],c:1.40,b:20},
  // ─── GROUPE G ───
- {id:"G1",g:"G",j:1,d:"15/06",h:"BEL",a:"EGY",p:[2,0],r:[null,null],c:1.55,b:20},
- {id:"G2",g:"G",j:1,d:"15/06",h:"IRN",a:"NZL",p:[1,0],r:[null,null],c:1.60,b:50,
+ {id:"G1",g:"G",j:1,d:"15/06",h:"BEL",a:"EGY",p:[2,0],r:[1,1],c:1.55,b:20},
+ {id:"G2",g:"G",j:1,d:"15/06",h:"IRN",a:"NZL",p:[1,0],r:[2,2],c:1.60,b:50,
   note:"L'Iran gagne petit : 1-0 plus rare et aussi probable que le 2-0 du peloton."},
  {id:"G3",g:"G",j:2,d:"21/06",h:"BEL",a:"IRN",p:[2,0],r:[null,null],c:1.50,b:20},
  {id:"G4",g:"G",j:2,d:"21/06",h:"NZL",a:"EGY",p:[0,2],r:[null,null],c:1.60,b:20},
@@ -248,9 +248,9 @@ const MATCHES = [
   note:"Deux blocs ultra-défensifs qui joueront la qualif en 3e place : LE 0-0 du tournoi. Bonus rareté énorme si ça passe."},
  {id:"G6",g:"G",j:3,d:"26/06",h:"NZL",a:"BEL",p:[0,3],r:[null,null],c:1.25,b:50},
  // ─── GROUPE H ───
- {id:"H1",g:"H",j:1,d:"15/06",h:"ESP",a:"CPV",p:[4,0],r:[null,null],c:1.07,b:50,
+ {id:"H1",g:"H",j:1,d:"15/06",h:"ESP",a:"CPV",p:[4,0],r:[0,0],c:1.07,b:50,
   note:"L'Espagne n°1 mondiale face au plus petit qualifié africain. 4-0 décalé du 3-0 majoritaire."},
- {id:"H2",g:"H",j:1,d:"15/06",h:"KSA",a:"URU",p:[0,2],r:[null,null],c:1.55,b:20},
+ {id:"H2",g:"H",j:1,d:"15/06",h:"KSA",a:"URU",p:[0,2],r:[1,1],c:1.55,b:20},
  {id:"H3",g:"H",j:2,d:"21/06",h:"ESP",a:"KSA",p:[3,0],r:[null,null],c:1.15,b:30},
  {id:"H4",g:"H",j:2,d:"21/06",h:"URU",a:"CPV",p:[3,0],r:[null,null],c:1.30,b:50},
  {id:"H5",g:"H",j:3,d:"26/06",h:"CPV",a:"KSA",p:[1,1],r:[null,null],c:3.20,b:50,
@@ -258,9 +258,9 @@ const MATCHES = [
  {id:"H6",g:"H",j:3,d:"26/06",h:"URU",a:"ESP",p:[1,2],r:[null,null],c:1.75,b:50,
   note:"1-2 plus rare que le 0-2 du peloton : l'Uruguay marque presque toujours, l'Espagne encaisse peu mais joue haut."},
  // ─── GROUPE I ───
- {id:"I1",g:"I",j:1,d:"16/06",h:"FRA",a:"SEN",p:[2,1],r:[null,null],c:1.55,b:30,
+ {id:"I1",g:"I",j:1,d:"16/06",h:"FRA",a:"SEN",p:[2,1],r:[3,1],c:1.55,b:30,
   note:"Le groupe de la mort. France favorite mais en forme moyenne (battue par la CIV en prépa) ; le Sénégal de Koulibaly sait marquer. 2-1 plutôt que le 2-0 du peloton."},
- {id:"I2",g:"I",j:1,d:"16/06",h:"IRQ",a:"NOR",p:[0,3],r:[null,null],c:1.25,b:50,
+ {id:"I2",g:"I",j:1,d:"16/06",h:"IRQ",a:"NOR",p:[0,3],r:[1,4],c:1.25,b:50,
   note:"Haaland face à la défense la plus faible du groupe : 0-3 décalé du 0-2."},
  {id:"I3",g:"I",j:2,d:"22/06",h:"FRA",a:"IRQ",p:[4,0],r:[null,null],c:1.12,b:50,
   note:"Candidat X2 : favori écrasant, et le 4-0 paie mieux que le 3-0 majoritaire."},
@@ -270,9 +270,9 @@ const MATCHES = [
   note:"Choc pour la 1re place du groupe, le nul peut arranger les deux. 🎲 Coup de poker : 2-1 Norvège (cote ≈ 4,5)."},
  {id:"I6",g:"I",j:3,d:"26/06",h:"SEN",a:"IRQ",p:[2,0],r:[null,null],c:1.40,b:20},
  // ─── GROUPE J ───
- {id:"J1",g:"J",j:1,d:"16/06",h:"ARG",a:"ALG",p:[2,0],r:[null,null],c:1.35,b:20,
+ {id:"J1",g:"J",j:1,d:"16/06",h:"ARG",a:"ALG",p:[2,0],r:[3,0],c:1.35,b:20,
   note:"Champions en titre, mais vieillissants et touchés par les blessures (Romero, Álvarez) : pas de carton attendu."},
- {id:"J2",g:"J",j:1,d:"16/06",h:"AUT",a:"JOR",p:[2,0],r:[null,null],c:1.50,b:20},
+ {id:"J2",g:"J",j:1,d:"16/06",h:"AUT",a:"JOR",p:[2,0],r:[3,1],c:1.50,b:20},
  {id:"J3",g:"J",j:2,d:"22/06",h:"ARG",a:"AUT",p:[2,1],r:[null,null],c:1.60,b:30,
   note:"L'Autriche de Rangnick presse haut et marquera. 2-1 plutôt que 2-0."},
  {id:"J4",g:"J",j:2,d:"22/06",h:"JOR",a:"ALG",p:[1,2],r:[null,null],c:1.90,b:30},
@@ -458,3 +458,4 @@ render();
 </script>
 </body>
 </html>
+                                                                                                     
